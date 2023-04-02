@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Layout from '@/layout/layout';
 import Image from 'next/image';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 const Login = () => {
+    const [show, setShow] = useState(false);
+
+    //github handler 
+    async function handleGithubSignIn() {
+        signIn('github', {
+            callbackUrl: "http://localhost:3000",
+        })
+    }
     return (
         <Layout>
             <Head>
@@ -18,7 +27,7 @@ const Login = () => {
                 </div>
                 {/*login button */}
                 <div className="input-button">
-                    <button type="button" className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200">
+                    <button type="button" onClick={handleGithubSignIn} className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200">
                         Sign in with Github <Image src={'/assets/github.svg'} alt="hi" width={25} height={25}></Image>
                     </button>
                 </div>
